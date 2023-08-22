@@ -17,4 +17,8 @@ class HomeController extends Controller
             return view('dashboard');
         }
     }
+
+    public function index() {
+        return view('home.userpage');
+    }
 }
