@@ -35,12 +35,24 @@
                         </button>
                     </form>
 
-                    <li class="nav-item">
-                        <a class="btn btn-primary" id="logincss" href="{{ route('login') }}">Login</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="btn btn-success" href="{{ route('register') }}">Register</a>
-                    </li>
+                    @if (Route::has('login'))
+                            @auth
+                                <li class="nav-item">
+                                    <form method="POST" action="{{ route('logout') }}">
+                                        @csrf
+                                        <input class="btn mx-2 py-2" type="submit" value="Logout">
+                                     </form>
+                                </li>
+                                @else
+                                <li class="nav-item">
+                                    <a class="btn btn-primary" id="logincss" href="{{ route('login') }}">Login</a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="btn btn-success" href="{{ route('register') }}">Register</a>
+                                </li>
+                            @endauth
+                    @endif
 
 
                 </ul>
