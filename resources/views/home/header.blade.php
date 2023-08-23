@@ -36,22 +36,29 @@
                     </form>
 
                     @if (Route::has('login'))
-                            @auth
-                                <li class="nav-item">
-                                    <form method="POST" action="{{ route('logout') }}">
-                                        @csrf
-                                        <input class="btn mx-2 py-2" type="submit" value="Logout">
-                                     </form>
-                                </li>
-                                @else
-                                <li class="nav-item">
-                                    <a class="btn btn-primary" id="logincss" href="{{ route('login') }}">Login</a>
-                                </li>
-
-                                <li class="nav-item">
-                                    <a class="btn btn-success" href="{{ route('register') }}">Register</a>
-                                </li>
-                            @endauth
+                        @auth
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button"
+                                    aria-haspopup="true" aria-expanded="true"> <span
+                                        class="nav-label">{{ Auth::user()->name }} <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <form method="POST" action="{{ route('logout') }}">
+                                            @csrf
+                                            <input class="btn mx-2 py-2" type="submit" value="Logout">
+                                        </form>
+                                    </li>
+                                    <li><a href={{ route('profile.show') }}>Profile</a></li>
+                                </ul>
+                            </li>
+                        @else
+                            <li class="nav-item mx-2">
+                                <a class="btn btn-primary " href="{{ route('login') }}">Log in</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="btn btn-success" href="{{ route('register') }}">Register</a>
+                            </li>
+                        @endauth
                     @endif
 
 
