@@ -32,9 +32,9 @@
                 <div class="div_center">
                     <h2 class="h2_font">Add Category</h2>
 
-                    <form action="{{ url('/add_catagory') }}" method="POST">
+                    <form action="{{ url('/add_category') }}" method="POST">
                         @csrf
-                        <input type="text" class="input_color" name="name" placeholder="Write category name">
+                        <input type="text" class="input_color" name="category" placeholder="Write category name">
 
                         <input type="submit" class="btn btn-primary" class="submit" value="Add Category">
                     </form>
