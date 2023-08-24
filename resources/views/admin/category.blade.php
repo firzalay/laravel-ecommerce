@@ -17,6 +17,14 @@
         .input_color {
             color:black
         }
+
+        .center {
+            margin: auto;
+            width: 50%;
+            text-align: center;
+            margin-top: 30px;
+            border: 1px solid white;
+        }
     </style>
 </head>
 
@@ -32,6 +40,7 @@
 
                 @if (session()->has('message'))
                     <div class="alert alert-success">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
                         {{ session()->get('message') }}
                     </div>
                 @endif
@@ -46,6 +55,24 @@
                         <input type="submit" class="btn btn-primary" class="submit" value="Add Category">
                     </form>
                 </div>
+
+                <table class="center">
+                    
+                    <tr>
+                        <td>Category Name</td>
+                        <td>Action</td>
+                    </tr>
+
+                    @foreach ($datas as $data)
+                        
+                    <tr>
+                        <td>{{ $data->category_name }}</td>
+                        <td><a class="btn btn-danger">Delete</a></td>
+                    </tr>
+
+                    @endforeach
+
+                </table>
             </div>
         </div>
         <!-- partial -->
