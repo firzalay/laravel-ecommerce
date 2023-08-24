@@ -21,7 +21,7 @@ class AdminController extends Controller
         $data->category_name = $request->category;
         $data->save();
 
-        return redirect()->back()->with('message', 'Category Added Succesfully');
+        return redirect()->back()->with('message', 'Category Added Successfully');
         
     }
 
@@ -30,6 +30,6 @@ class AdminController extends Controller
         $data = Category::find($id);
         $data->delete();
 
-        return redirect()->back();
+        return redirect()->back()->with('message', 'Category Deleted Successfully');
     }
 }
