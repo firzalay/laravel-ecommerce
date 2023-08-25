@@ -10,11 +10,11 @@ use Illuminate\Support\Facades\Auth;
 class HomeController extends Controller
 {
     public function index() {
-        $products = Product::all();
+        $products = Product::paginate(10);
     
         return view('home.userpage', compact('products'));
     }
-    
+
     public function redirect() {
         $usertype = Auth::user()->usertype;
 

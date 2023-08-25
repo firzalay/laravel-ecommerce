@@ -40,7 +40,7 @@
                                 </h6>
                             @else
                                 <h6 style="color: blue;">
-									Price
+                                    Price
                                     Rp. {{ number_format($product->price) }}
                                 </h6>
                             @endif
@@ -50,5 +50,11 @@
                 </div>
             @endforeach
 
+            
+
         </div>
+
+		<span style="padding-top: 20px; ">
+			{!! $products->withQueryString()->links('pagination::bootstrap-5') !!}
+		</span>
 </section>
