@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Category;
 use App\Models\Product;
+use App\Models\Category;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
 {
@@ -70,6 +71,18 @@ class AdminController extends Controller
         return view('admin.show_product', compact('products'));
     }
 
+    public function delete_product($id)
+    {
+        $product = Product::find($id);
+
+        if ($product->image) {
+            Storage::delete($product->image);
+        }
+
+        $product->delete();
+
+        return redirect()->back()->with('message', 'Product deleted successfully');
+    }
 
 
 }
