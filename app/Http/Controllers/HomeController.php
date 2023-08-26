@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
-use App\Models\Product;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
+use App\Models\Product;
+
 
 class HomeController extends Controller
 {
@@ -25,6 +27,13 @@ class HomeController extends Controller
         } else {
             return view('home.userpage',compact('products'));
         }
+    }
+
+    public function product_details($id)
+    {
+        $product = Product::find($id);
+
+        return view('home.product_details', compact('product'));
     }
 
 }
