@@ -52,7 +52,12 @@
 
         <!-- end slider section -->
 
-
+        @if (session()->has('message'))
+            <div class="alert alert-success">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
+                {{ session()->get('message') }}
+            </div>
+        @endif
 
         <table>
             <tr>
@@ -73,18 +78,22 @@
                     <td>
                         <img src="{{ asset('storage/product/' . $cart->image) }}" width="200" height="200" />
                     </td>
-                    <td><a onclick="return confirm('Are you sure this product?')"  href="{{ url("/remove_cart/{$cart->id}") }}" class="btn btn-danger">Remove Product</a></td>
+                    <td><a onclick="return confirm('Are you sure this product?')"
+                            href="{{ url("/remove_cart/{$cart->id}") }}" class="btn btn-danger">Remove Product</a></td>
                 </tr>
 
                 <?php $totalPrice += $cart->price; ?>
-
             @endforeach
+
 
         </table>
 
-        <h1 style="margin:auto;">Total Price : {{ $totalPrice }}</h1>
+        <h4 style="margin:auto; padding-top:20px;">Total Price : {{ number_format($totalPrice) }}</h4>
 
-        <div>
+        <div style="margin:auto; padding: 30px; text-align:center;">
+            <h4>Proceed to order</h4>
+            <a href="{{ url('/cash_order') }}" class="btn btn-danger">Cash On Delivery</a>
+            <a href="" class="btn btn-danger">Pay using card</a>
         </div>
 
 
