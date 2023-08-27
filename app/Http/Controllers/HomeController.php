@@ -186,8 +186,8 @@ class HomeController extends Controller
             $cart->delete();
         }
 
-        Session::flash('success', 'Payment successful!');
+        Session::flash('payment_success', 'Payment successful!');
 
-        return back();
+        return redirect('/show_cart');
     }
 }
