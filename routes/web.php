@@ -54,6 +54,10 @@ Route::get('/delete_product/{id}', [AdminController::class, 'delete_product']);
 Route::get('/update_product/{id}', [AdminController::class, 'update_product']);
 Route::post('/update_product_confirm/{id}', [AdminController::class, 'update_product_confirm']);
 
+//Stripe
+Route::get('/stripe/{totalprice}', [HomeController::class, 'stripe']);
+Route::post('/stripe/{totalprice}',[HomeController::class, 'stripePost'])->name('stripe.post');
+
 
 
 

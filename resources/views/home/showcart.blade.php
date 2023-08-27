@@ -93,7 +93,7 @@
         <div style="margin:auto; padding: 30px; text-align:center;">
             <h4>Proceed to order</h4>
             <a href="{{ url('/cash_order') }}" class="btn btn-danger">Cash On Delivery</a>
-            <a href="" class="btn btn-danger">Pay using card</a>
+            <a href="{{ url("/stripe/$totalPrice") }}" class="btn btn-danger">Pay using card</a>
         </div>
 
 

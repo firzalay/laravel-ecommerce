@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 
+use Stripe;
+use App\Models\Cart;
+use App\Models\User;
+use App\Models\Order;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\User;
-use App\Models\Product;
-use App\Models\Cart;
-use App\Models\Order;
+use Illuminate\Support\Facades\Session;
 
 
 class HomeController extends Controller
@@ -81,21 +83,20 @@ class HomeController extends Controller
             $id = Auth::user()->id;
 
             $carts = Cart::where('user_id', '=', $id)->get();
-    
-            return view('home.showcart', compact('carts'));    
+
+            return view('home.showcart', compact('carts'));
         } else {
             return redirect('login');
         }
-
     }
 
     public function remove_cart($id)
     {
         $cart = Cart::find($id);
 
-        $cart->delete(); 
+        $cart->delete();
 
-        return redirect()->back();  
+        return redirect()->back();
     }
 
     public function cash_order()
@@ -104,8 +105,8 @@ class HomeController extends Controller
 
         $userId = $user->id;
 
-        $datas = Cart::where('user_id','=',$userId)->get();
-        
+        $datas = Cart::where('user_id', '=', $userId)->get();
+
         foreach ($datas as $data) {
             $order = new Order;
 
@@ -130,9 +131,63 @@ class HomeController extends Controller
             $cart_id = $data->id;
             $cart = Cart::find($cart_id);
             $cart->delete();
-
         }
 
         return redirect()->back()->with('message', 'We received your order, we will connect with you soon!');
+    }
+
+    public function stripe($totalprice)
+    {
+        return view('home.stripe', compact('totalprice'));
+    }
+
+    public function stripePost(Request $request, $totalprice)
+    {
+        
+
+        Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+
+        Stripe\Charge::create([
+            "amount" => $totalprice * 100,
+            "currency" => "usd",
+            "source" => $request->stripeToken,
+            "description" => "Thanks for payment"
+        ]);
+
+        $user = Auth::user();
+
+        $userId = $user->id;
+
+        $datas = Cart::where('user_id', '=', $userId)->get();
+
+        foreach ($datas as $data) {
+            $order = new Order;
+
+            $order->name = $data->name;
+            $order->email = $data->email;
+            $order->phone = $data->phone;
+            $order->address = $data->address;
+            $order->user_id = $data->user_id;
+
+            $order->product_title = $data->product_title;
+            $order->price = $data->price;
+            $order->quantity = $data->quantity;
+            $order->image = $data->image;
+            $order->product_id = $data->product_id;
+
+            $order->payment_status = 'Paid';
+            $order->delivery_status = 'Processing';
+
+            $order->save();
+
+
+            $cart_id = $data->id;
+            $cart = Cart::find($cart_id);
+            $cart->delete();
+        }
+
+        Session::flash('success', 'Payment successful!');
+
+        return back();
     }
 }
