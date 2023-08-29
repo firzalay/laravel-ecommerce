@@ -143,7 +143,7 @@ class HomeController extends Controller
 
     public function stripePost(Request $request, $totalprice)
     {
-        
+       
 
         Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
 
