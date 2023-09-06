@@ -14,7 +14,7 @@
 
         .table_deg {
             border: 2px solid white;
-            width: 70%;
+            width: 90%;
             margin: auto;
             text-align: center;
         }
@@ -49,6 +49,7 @@
                         <th>Payment Status</th>
                         <th>Delivery Status</th>
                         <th>Image</th>
+                        <th>Delivered</th>
                     </tr>
                     @foreach ($orders as $order)
                         <tr>
@@ -64,6 +65,14 @@
                             <td>
                                 <img src="{{ asset('storage/product/' . $order->image) }}" />
                             </td>
+                            <td>
+                                @if ($order->delivery_status == 'Processing')
+                                    <a href="{{ url("/delivered/{$order->id}") }}" onclick="return confirm('Are you sure this product is delivered?')" class="btn btn-primary">Delivered</a>
+                                @else
+                                    <p>Delivered</p>
+                                @endif
+                            </td>
+
                         </tr>
                     @endforeach
 

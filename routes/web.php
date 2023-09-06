@@ -42,6 +42,8 @@ Route::get('/remove_cart/{id}', [HomeController::class, 'remove_cart']);
 Route::get('/cash_order', [HomeController::class, 'cash_order']);
 Route::get('/order', [AdminController::class, 'order']);
 
+Route::get('/delivered/{id}', [AdminController::class, 'delivered']);
+
 
 // Category
 Route::get('/view_category', [AdminController::class, 'view_category']);
